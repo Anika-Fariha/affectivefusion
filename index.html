@@ -1,527 +1,68 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>AffectiveFusion — Generative & Responsible Multimodal AI</title>
-
-
-  <script src="https://cdn.tailwindcss.com"></script>
- 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="refresh" content="0; url=./affectivefusion.html">
+  <title>Redirecting to AffectiveFusion...</title>
   <style>
-    :root{
-      --bg:#0b1220;
-      --card:#071022;
-      --muted:#94a3b8;
-      --accent-1:#3B82F6;  
-      --accent-2:#A855F7;  
-      --accent-3:#06B6D4;   
-      --accent-4:#7C3AED;   
-    }
-    html,body{height:100%}
-    body{
-      font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: var(--bg);
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #0b1220 0%, #1a2332 100%);
       color: #e6eef8;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      scroll-behavior: smooth;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
     }
-
-
-    .gradient-bg {
-      position: fixed;
-      inset: 0;
-      z-index: -3;
-      background: linear-gradient(120deg, rgba(59,130,246,0.12), rgba(168,85,247,0.10) 30%, rgba(6,182,212,0.08) 60%, rgba(124,58,237,0.06));
-      filter: blur(40px) saturate(120%);
-      animation: hueShift 14s linear infinite;
-      transform: translateZ(0);
+    .container {
+      text-align: center;
     }
-    @keyframes hueShift{
-      0%{filter: blur(36px) hue-rotate(0deg) saturate(100%)}
-      50%{filter: blur(48px) hue-rotate(60deg) saturate(120%)}
-      100%{filter: blur(36px) hue-rotate(0deg) saturate(100%)}
+    .spinner {
+      width: 50px;
+      height: 50px;
+      margin: 0 auto 20px;
+      border: 4px solid rgba(59, 130, 246, 0.2);
+      border-top-color: #3B82F6;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
     }
-
-   
-    .blob { position: fixed; inset: 0; z-index:-2; pointer-events:none; opacity:.35; }
-
-    /* Glass card */
-    .glass {
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
-      border: 1px solid rgba(255,255,255,0.04);
-      backdrop-filter: blur(6px) saturate(120%);
-      box-shadow: 0 6px 30px rgba(3,7,18,0.6);
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
-
-    /* subtle entrance */
-    .reveal { transform: translateY(8px); opacity: 0; transition: all .6s cubic-bezier(.2,.9,.25,1); }
-    .reveal.visible { transform: none; opacity: 1; }
-
-
-    .accent-1 { color: var(--accent-1); }
-    .accent-2 { color: var(--accent-2); }
-    .accent-3 { color: var(--accent-3); }
-
-    /* nav */
-    nav a { transition: color .18s ease; }
-    nav a:hover { color: white; }
-
-    /* footer */
-    footer { color: var(--muted); font-size: 13px; }
-
-  
-    .chart-card { min-height: 220px; }
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      margin: 0 0 10px;
+      background: linear-gradient(90deg, #3B82F6, #A855F7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    p {
+      color: #94a3b8;
+      font-size: 14px;
+    }
+    a {
+      color: #3B82F6;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
   </style>
-</head>
-<body class="antialiased">
-
-
-  <div class="gradient-bg"></div>
-  <svg class="blob" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="g1" x1="0" x2="1">
-        <stop stop-color="#3B82F6" offset="0"/>
-        <stop stop-color="#A855F7" offset="1"/>
-      </linearGradient>
-      <linearGradient id="g2" x1="0" x2="1">
-        <stop stop-color="#06B6D4" offset="0"/>
-        <stop stop-color="#7C3AED" offset="1"/>
-      </linearGradient>
-      <filter id="blur"><feGaussianBlur stdDeviation="40"/></filter>
-    </defs>
-    <g filter="url(#blur)">
-      <ellipse cx="650" cy="120" rx="320" ry="140" fill="url(#g1)" transform="rotate(-20 650 120)"/>
-      <ellipse cx="120" cy="460" rx="260" ry="120" fill="url(#g2)" transform="rotate(10 120 460)"/>
-    </g>
-  </svg>
-
-  <!-- Top nav -->
-  <header class="fixed w-full top-0 z-40">
-    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-      <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-lg flex items-center justify-center bg-gradient-to-br from-[rgba(59,130,246,0.16)] to-[rgba(168,85,247,0.12)] glass">
-          <svg width="22" height="22" viewBox="0 0 24 24" class="text-white" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v18M3 12h18" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div>
-          <div class="text-sm text-slate-300 font-semibold">AffectiveFusion</div>
-          <div class="text-xs text-slate-400">Generative · Responsible · Multimodal</div>
-        </div>
-      </div>
-
-      <nav class="hidden md:flex items-center space-x-6 text-slate-300">
-        <a href="#overview" class="text-sm">Overview</a>
-        <a href="#architecture" class="text-sm">Architecture</a>
-        <a href="#results" class="text-sm">Results</a>
-        <a href="#ethics" class="text-sm">Ethics</a>
-        <a href="#credits" class="text-sm">Credits</a>
-      </nav>
-
-      <div class="md:hidden text-slate-300">
-        <button id="menuBtn" class="p-2 rounded-md glass"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16" stroke="#e6eef8" stroke-width="1.6" stroke-linecap="round"/></svg></button>
-      </div>
-    </div>
-    <div id="mobileMenu" class="hidden md:hidden bg-[rgba(255,255,255,0.02)] border-t border-white/5">
-      <div class="max-w-4xl mx-auto px-6 py-4 flex flex-col space-y-2">
-        <a href="#overview" class="text-slate-300">Overview</a>
-        <a href="#architecture" class="text-slate-300">Architecture</a>
-        <a href="#results" class="text-slate-300">Results</a>
-        <a href="#ethics" class="text-slate-300">Ethics</a>
-        <a href="#credits" class="text-slate-300">Credits</a>
-      </div>
-    </div>
-  </header>
-
-
-  <section id="hero" class="min-h-[72vh] flex items-center">
-    <div class="max-w-6xl mx-auto px-6 py-20">
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-        <div class="md:col-span-7">
-          <h1 class="text-4xl md:text-5xl font-extrabold leading-tight tracking-tight bg-clip-text text-transparent" style="background-image: linear-gradient(90deg, var(--accent-1), var(--accent-2));">AffectiveFusion</h1>
-          <p class="mt-4 text-slate-300 max-w-2xl">
-            Generative and Responsible Multimodal AI for Emotion Recognition — a compact prototype that fuses visual, acoustic, and language signals to detect and respond to human affect with fairness and interpretability.
-          </p>
-
-          <div class="mt-6 flex items-center space-x-3">
-            <a href="#overview" class="inline-flex items-center gap-2 px-5 py-3 rounded-lg text-sm font-semibold glass hover:scale-[1.02] transform transition">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
-              Explore Research
-            </a>
-            <a href="#results" class="text-sm text-slate-300 px-3 py-2 hover:underline">View results →</a>
-          </div>
-        </div>
-
-
-        <div class="md:col-span-5 grid grid-cols-1 gap-4">
-          <div class="glass p-5 rounded-2xl reveal" style="transition-delay:.1s">
-            <div class="flex items-center justify-between">
-              <div>
-                <div class="text-xs text-slate-400 uppercase">Fused Accuracy</div>
-                <div class="text-3xl font-bold accent-1">81%</div>
-                <div class="text-xs text-slate-400 mt-1">Late-fusion (weighted voting)</div>
-              </div>
-              <div class="text-right">
-                <div class="text-xs text-slate-400">Generative Gain</div>
-                <div class="text-2xl font-bold accent-2">+14%</div>
-                <div class="text-xs text-slate-400 mt-1">vs previous pipeline</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="glass p-5 rounded-2xl reveal" style="transition-delay:.2s">
-            <div class="grid grid-cols-2 gap-4">
-              <div class="border-r border-white/5 pr-4">
-                <div class="text-xs text-slate-400">Modalities</div>
-                <div class="font-semibold text-lg">3</div>
-                <div class="text-xs text-slate-400 mt-1">Visual · Acoustic · Language</div>
-              </div>
-              <div class="">
-                <div class="text-xs text-slate-400">Emotions tracked</div>
-                <div class="font-semibold text-lg">7</div>
-                <div class="text-xs text-slate-400 mt-1">Angry, Disgust, Fear, Happy, Neutral, Sad, Surprise</div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  <main class="max-w-6xl mx-auto px-6 py-12 space-y-12">
-
-    <section id="overview" class="glass p-8 rounded-2xl">
-      <h2 class="text-2xl font-bold accent-1">Overview</h2>
-      <p class="mt-3 text-slate-300 max-w-3xl">
-        AffectiveFusion is a prototype system that demonstrates how responsibly designed generative models and robust multimodal fusion can improve emotion recognition. It leverages:
-      </p>
-
-      <div class="mt-6 grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div class="p-4 rounded-lg glass">
-          <div class="text-sm text-slate-400">Fused Accuracy</div>
-          <div class="text-xl font-bold accent-1">81%</div>
-          <div class="text-xs text-slate-400 mt-1">Weighted voting across streams</div>
-        </div>
-        <div class="p-4 rounded-lg glass">
-          <div class="text-sm text-slate-400">Generative Layer</div>
-          <div class="text-xl font-bold accent-2">FLAN-T5</div>
-          <div class="text-xs text-slate-400 mt-1">Contextual summaries & empathetic responses</div>
-        </div>
-        <div class="p-4 rounded-lg glass">
-          <div class="text-sm text-slate-400">Bias Mitigation</div>
-          <div class="text-xl font-bold accent-3">Detoxify + rules</div>
-          <div class="text-xs text-slate-400 mt-1">Toxicity & threat detection</div>
-        </div>
-        <div class="p-4 rounded-lg glass">
-          <div class="text-sm text-slate-400">Deployment</div>
-          <div class="text-xl font-bold text-white">Prototype</div>
-          <div class="text-xs text-slate-400 mt-1">Flask + Hugging Face models (local GPU)</div>
-        </div>
-      </div>
-    </section>
-
-
-    <section id="architecture" class="glass p-8 rounded-2xl">
-      <h2 class="text-2xl font-bold accent-2">Architecture</h2>
-      <p class="mt-3 text-slate-300 max-w-2xl">A modular pipeline: three independent modality streams → fusion core → generative summarizer. Each stream runs a pretrained/fine-tuned model and returns a confidence-scored emotion label.</p>
-
-      <div class="mt-6 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-        <div class="md:col-span-7">
-          <div class="flex flex-col md:flex-row items-center md:items-start gap-4">
-            <div class="p-4 glass rounded-xl w-full md:w-3/12 text-center">
-              <div class="text-xs text-slate-400">Language Stream</div>
-              <div class="font-semibold mt-2">DistilRoBERTa</div>
-              <div class="text-xs text-slate-400 mt-1">Text / transcript analysis</div>
-            </div>
-
-            <div class="p-4 glass rounded-xl w-full md:w-3/12 text-center">
-              <div class="text-xs text-slate-400">Visual Stream</div>
-              <div class="font-semibold mt-2">DeepFace</div>
-              <div class="text-xs text-slate-400 mt-1">Facial expression recognition</div>
-            </div>
-
-            <div class="p-4 glass rounded-xl w-full md:w-3/12 text-center">
-              <div class="text-xs text-slate-400">Acoustic Stream</div>
-              <div class="font-semibold mt-2">Wav2Vec2</div>
-              <div class="text-xs text-slate-400 mt-1">Prosody & tone analysis</div>
-            </div>
-          </div>
-
-          <div class="mt-8 flex items-center justify-center">
-            <div class="w-full">
-              <div class="flex items-center justify-center gap-6">
-                <div class="text-slate-300 text-sm">▸</div>
-                <div class="glass p-4 rounded-xl text-center w-64">
-                  <div class="text-xs text-slate-400">Fusion Core</div>
-                  <div class="font-bold mt-1">Weighted Voting</div>
-                  <div class="text-xs text-slate-400 mt-1">Confidence-based tie-breaking</div>
-                </div>
-                <div class="text-slate-300 text-sm">▸</div>
-                <div class="glass p-4 rounded-xl text-center w-64">
-                  <div class="text-xs text-slate-400">Generative Layer</div>
-                  <div class="font-bold mt-1 accent-2">FLAN-T5</div>
-                  <div class="text-xs text-slate-400 mt-1">Emotion-aware summaries & prompts</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="md:col-span-5">
-          <div class="glass p-5 rounded-xl">
-            <h3 class="text-sm text-slate-300 font-semibold">Notes</h3>
-            <ul class="mt-3 text-sm text-slate-400 space-y-2">
-              <li>• Modular design lets each stream be updated independently.</li>
-              <li>• Fusion tolerates missing/noisy modalities by leveraging consensus.</li>
-              <li>• Responsible AI layer filters toxic content and flags bias before generation.</li>
-            </ul>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-
-    <section id="results" class="glass p-8 rounded-2xl">
-      <h2 class="text-2xl font-bold accent-1">Results</h2>
-      <p class="mt-3 text-slate-300 max-w-2xl">Summary of modality performance and per-emotion metrics. Charts below are animated and color-matched to the theme.</p>
-
-      <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Donut 1 -->
-        <div class="glass p-5 rounded-xl chart-card">
-          <div class="text-sm text-slate-400">Visual Stream (DeepFace)</div>
-          <div class="relative h-48 mt-4">
-            <canvas id="donutVisual"></canvas>
-          </div>
-          <div class="mt-3 text-xs text-slate-400">Excels at clear facial cues; sensitive to occlusion/lighting.</div>
-        </div>
-
-
-        <div class="glass p-5 rounded-xl chart-card">
-          <div class="text-sm text-slate-400">Language Stream (DistilRoBERTa)</div>
-          <div class="relative h-48 mt-4">
-            <canvas id="donutLanguage"></canvas>
-          </div>
-          <div class="mt-3 text-xs text-slate-400">Good with contextual cues; struggles with ambiguous phrasing.</div>
-        </div>
-
-
-        <div class="glass p-5 rounded-xl chart-card">
-          <div class="text-sm text-slate-400">Acoustic Stream (Wav2Vec2)</div>
-          <div class="relative h-48 mt-4">
-            <canvas id="donutAcoustic"></canvas>
-          </div>
-          <div class="mt-3 text-xs text-slate-400">Captures tone and prosody; vulnerable to background noise.</div>
-        </div>
-      </div>
-
-      <div class="mt-8 glass p-5 rounded-xl">
-        <div class="text-sm text-slate-300 font-semibold">Emotion-wise Metrics</div>
-        <div class="mt-4">
-          <div class="relative h-72">
-            <canvas id="emotionBar"></canvas>
-          </div>
-        </div>
-
-        <div class="mt-6 grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div class="p-4 rounded-lg glass text-center">
-            <div class="text-xs text-slate-400">Overall Accuracy</div>
-            <div class="text-2xl font-bold accent-1">67% → 81%</div>
-          </div>
-          <div class="p-4 rounded-lg glass text-center">
-            <div class="text-xs text-slate-400">Angry (F1)</div>
-            <div class="text-2xl font-bold accent-2">0.73 → 0.94</div>
-          </div>
-          <div class="p-4 rounded-lg glass text-center">
-            <div class="text-xs text-slate-400">Sad (F1)</div>
-            <div class="text-2xl font-bold accent-3">0.54 → 0.81</div>
-          </div>
-          <div class="p-4 rounded-lg glass text-center">
-            <div class="text-xs text-slate-400">Weighted F1</div>
-            <div class="text-2xl font-bold text-white">0.67 → 0.81</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-    <section id="ethics" class="glass p-8 rounded-2xl">
-      <h2 class="text-2xl font-bold accent-4">Ethics & Responsible AI</h2>
-      <p class="mt-3 text-slate-300 max-w-2xl">Affective systems can cause harm if left unchecked. This layer ensures the system is designed to be safe, fair, and explainable.</p>
-
-      <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div class="p-4 rounded-lg glass">
-          <div class="text-sm text-slate-400">Fairness</div>
-          <div class="font-semibold mt-1">Bias detection & mitigation</div>
-          <div class="text-xs text-slate-400 mt-2">Dataset checks, adversarial debiasing, demographic balancing.</div>
-        </div>
-        <div class="p-4 rounded-lg glass">
-          <div class="text-sm text-slate-400">Safety</div>
-          <div class="font-semibold mt-1">Toxicity & threat filtering</div>
-          <div class="text-xs text-slate-400 mt-2">Detoxify + rules to block dangerous outputs and escalate if required.</div>
-        </div>
-        <div class="p-4 rounded-lg glass">
-          <div class="text-sm text-slate-400">Transparency</div>
-          <div class="font-semibold mt-1">Interpretability & logs</div>
-          <div class="text-xs text-slate-400 mt-2">Confidence scores, per-modality contributions, and summary rationales.</div>
-        </div>
-      </div>
-
-      <div class="mt-6 glass p-4 rounded-lg">
-        <div class="text-sm text-slate-300 font-semibold">Responsible AI Checklist</div>
-        <ul class="mt-3 text-sm text-slate-400 space-y-2">
-          <li>• Ensure diverse training data and document dataset provenance.</li>
-          <li>• Provide per-prediction confidence and contributor breakdown.</li>
-          <li>• Avoid high-stakes decisions without human oversight.</li>
-          <li>• Maintain logs for auditing and continual bias monitoring.</li>
-        </ul>
-      </div>
-    </section>
-
-   
-    <section id="credits" class="glass p-8 rounded-2xl">
-      <h2 class="text-2xl font-bold text-white">Credits & Data</h2>
-      <p class="mt-3 text-slate-300 max-w-2xl">Prototype uses publicly available pretrained models and internal dataset samples for demonstration only.</p>
-
-      <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="glass p-4 rounded-xl">
-          <div class="text-sm text-slate-400">Models</div>
-          <ul class="mt-2 text-sm text-slate-300 space-y-1">
-            <li>• DistilRoBERTa (text)</li>
-            <li>• DeepFace (visual)</li>
-            <li>• Wav2Vec2 (audio)</li>
-            <li>• FLAN-T5 (generative)</li>
-          </ul>
-        </div>
-        <div class="glass p-4 rounded-xl">
-          <div class="text-sm text-slate-400">Notes</div>
-          <p class="text-sm text-slate-300 mt-2">This visualization is a research-grade demo. For production, follow data privacy guidelines, run external audits, and include human-in-the-loop for sensitive contexts.</p>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-
-  <footer class="pt-8 pb-16">
-    <div class="max-w-6xl mx-auto px-6 text-center">
-      <div class="border-t border-white/5 pt-6">
-        <div class="text-sm text-slate-400">AffectiveFusion © 2025 — Research Visualization Prototype</div>
-      </div>
-    </div>
-  </footer>
-
-  
   <script>
-
-    const menuBtn = document.getElementById('menuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    menuBtn && menuBtn.addEventListener('click',()=> mobileMenu.classList.toggle('hidden'));
-
-    
-    const reveals = document.querySelectorAll('.reveal');
-    const obs = new IntersectionObserver(entries=>{
-      entries.forEach(e=>{
-        if(e.isIntersecting) e.target.classList.add('visible');
-      });
-    }, {threshold:0.12});
-    reveals.forEach(r=>obs.observe(r));
-
-   
-    const themeColors = {
-      primary: getComputedStyle(document.documentElement).getPropertyValue('--accent-1').trim() || '#3B82F6',
-      secondary: getComputedStyle(document.documentElement).getPropertyValue('--accent-2').trim() || '#A855F7',
-      cyan: getComputedStyle(document.documentElement).getPropertyValue('--accent-3').trim() || '#06B6D4',
-      lavender: getComputedStyle(document.documentElement).getPropertyValue('--accent-4').trim() || '#7C3AED'
-    };
-
-    
-    function createDonut(canvasId, val, color){
-      const ctx = document.getElementById(canvasId).getContext('2d');
-      new Chart(ctx, {
-        type:'doughnut',
-        data:{
-          labels:['value','rest'],
-          datasets:[{
-            data:[val,100-val],
-            backgroundColor:[color,'rgba(255,255,255,0.06)'],
-            borderWidth:0
-          }]
-        },
-        options:{
-          cutout:'70%',
-          maintainAspectRatio:false,
-          plugins:{
-            tooltip:{enabled:false},
-            legend:{display:false},
-          }
-        },
-        plugins: [{
-          id: 'centerText',
-          afterDraw: chart=>{
-            const {ctx, chartArea: {left, right, top, bottom, width, height}} = chart;
-            ctx.save();
-            ctx.fillStyle = color;
-            ctx.font = '700 22px Inter';
-            ctx.textAlign='center';
-            ctx.textBaseline='middle';
-            ctx.fillText(val + '%', (left+right)/2, (top+bottom)/2);
-            ctx.restore();
-          }
-        }]
-      });
-    }
-
-    createDonut('donutVisual', 82, themeColors.primary);
-    createDonut('donutLanguage', 78, themeColors.secondary);
-    createDonut('donutAcoustic', 70, themeColors.cyan);
-
-    // (Precision / Recall / F1)
-    const emotionCtx = document.getElementById('emotionBar').getContext('2d');
-    const emotionChart = new Chart(emotionCtx, {
-      type: 'bar',
-      data: {
-        labels: ['Angry','Disgust','Fear','Happy','Neutral','Sad','Surprise'],
-        datasets: [
-          { label:'Precision', data:[0.88,0.88,0.91,0.78,0.57,0.84,0.90].map(v=>v*100), backgroundColor: themeColors.primary, borderRadius:6 },
-          { label:'Recall',    data:[1.00,0.92,0.61,0.95,0.79,0.80,0.67].map(v=>v*100), backgroundColor: themeColors.secondary, borderRadius:6 },
-          { label:'F1-Score',  data:[0.94,0.90,0.73,0.86,0.66,0.81,0.77].map(v=>v*100), backgroundColor: themeColors.cyan, borderRadius:6 }
-        ]
-      },
-      options: {
-        maintainAspectRatio:false,
-        scales: {
-          y: {
-            beginAtZero:true,
-            ticks: { callback: v => v + '%', color:'#9fb0c6' },
-            grid: { color:'rgba(255,255,255,0.04)' }
-          },
-          x: { ticks: { color:'#cfe2f8' }, grid: { display:false } }
-        },
-        plugins:{
-          legend:{ position:'top', labels:{ color:'#cfe2f8' } },
-          tooltip:{
-            callbacks:{
-              label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y}%`
-            }
-          }
-        }
-      }
-    });
-
-
-    document.addEventListener('keyup', (e) => {
-      if(e.key === 'Tab') document.documentElement.style.setProperty('outline-color', 'rgba(255,255,255,0.08)');
-    });
+    window.location.href = "./affectivefusion.html";
   </script>
-
+</head>
+<body>
+  <div class="container">
+    <div class="spinner"></div>
+    <h1>AffectiveFusion</h1>
+    <p>Redirecting to the main page...</p>
+    <p><a href="./affectivefusion.html">Click here if you are not redirected automatically</a></p>
+  </div>
 </body>
 </html>
