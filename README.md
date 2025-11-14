@@ -4,6 +4,6 @@ A multimodal emotion recognition system that combines Generative AI, Responsible
 -facial expressions (DeepFace)
 
 Afterwards, fuses their predictions using majority voting to achieve 81% accuracy across 7 emotion classes (Happy, Sad, Angry, Disgust, Fear, Surprise, Neutral).
-Built with ethical AI safeguards including bias detection (Detoxify) and threat filtering, the pipeline generates human-readable emotional summaries using FLAN-T5. Trained on a custom dataset of 568 videos, the system demonstrates robust performance in real-time emotion detection with applications in mental health monitoring, virtual assistants, interactive storytelling, and educational platforms.
+Built with ethical AI safeguards including bias detection (Detoxify) and threat filtering, the pipeline generates human-readable emotional summaries using FLAN-T5. Trained on CREMA-D dataset, the system demonstrates robust performance in real-time emotion detection with applications in mental health monitoring, virtual assistants, interactive storytelling, and educational platforms.
 
-https://anika-fariha.github.io/affectivefusion/
+
